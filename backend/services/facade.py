@@ -3,6 +3,7 @@ from backend.persistence.repository import InMemoryRepository
 from backend.models.users import User
 from backend.models.amenities import Amenity
 from backend.models.places import Place
+from backend.models.reviews import Review
 
 class HBnBFacade:
     def __init__(self):
@@ -52,6 +53,23 @@ class HBnBFacade:
     def update_place(self, place_id, place_data):
         return self.place_repo.update(place_id, place_data)
 
+    def create_review(self, review_data):
+        review = Review(**review_data)
+        self.review_repo.add(review)
+        return review
 
-def generate_facade():
-    return HBnBFacade()
+    def get_review(self, review_id):
+        return self.review_repo.get(review_id)
+
+    def get_all_reviews(self):
+        return self.review_repo.get_all()
+
+    def get_reviews_by_place(self, place_id):
+        place = self.place_repo.get(place_id)
+        return self.review_repo.get_by_attribute('place', place)
+
+    def update_reviews(self, review_id, review_data):
+        return self.review_repo.update(review_id, review_data)
+
+    def delete_review(self, review_id):
+        return self.review_repo.delete(review_id)
