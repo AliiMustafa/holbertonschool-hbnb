@@ -12,3 +12,13 @@ class User(BaseModel):
         self.email = email
         self.is_admin = False
 
+    def to_dict(self):
+        """Convert the User instance into a dictionary."""
+        my_dict = super().to_dict()
+        my_dict.update({
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+        })
+        return my_dict
+
